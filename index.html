@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Vẽ Tin Tức | Hân x Anh Hoàng</title>
+    
+    <!-- 🎨 TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 🪄 Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 📸 html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Font Space Grotesk cho phong cách kỹ thuật & Inter cho văn bản -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            background-color: #f0f9ff; /* Xanh nhạt tinh khôi */
+            color: #083344;
+        }
+        .font-space { font-family: 'Space Grotesk', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* Nền Lưới Cyan mô phỏng chính xác bức ảnh anh Hoàng gửi */
+        .cyan-grid-bg {
+            background: linear-gradient(180deg, #00d4ff 0%, #7bf0ff 45%, #ffffff 100%);
+        }
+        .grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.65) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Phong cách Neo-Brutalism - Hộp phẳng, viền nét căng, bóng đổ cứng */
+        .brutal-box {
+            background-color: #ffffff;
+            border: 2px solid #083344;
+            box-shadow: 6px 6px 0px #06b6d4; /* Bóng màu Cyan đậm */
+        }
+        .brutal-panel {
+            background-color: #ffffff;
+            border: 3px solid #083344;
+            box-shadow: 10px 10px 0px #bae6fd;
+        }
+        .brutal-input {
+            width: 100%;
+            padding: 0.85rem;
+            background-color: #f8fafc;
+            border: 2px solid #083344;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        .brutal-input:focus {
+            background-color: #ffffff;
+            box-shadow: 4px 4px 0px #06b6d4;
+            transform: translate(-2px, -2px);
+        }
+        .brutal-btn {
+            background-color: #0891b2;
+            color: white;
+            border: 3px solid #083344;
+            box-shadow: 6px 6px 0px #083344;
+            transition: all 0.1s;
+        }
+        .brutal-btn:active {
+            transform: translate(6px, 6px);
+            box-shadow: 0px 0px 0px #083344;
+        }
+
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e0f2fe; border-left: 2px solid #083344; }
+        ::-webkit-scrollbar-thumb { background: #0891b2; border: 2px solid #083344; }
+        
+        .whitespace-pre-line { white-space: pre-line; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex flex-col items-center justify-start relative font-inter overflow-x-hidden">
+
+    <!-- Header trang web -->
+    <div class="w-full max-w-6xl mb-8 flex items-center justify-between">
+        <h1 class="font-space text-3xl font-bold text-cyan-900 drop-shadow-sm flex items-center gap-3">
+            <i data-lucide="pen-tool" class="w-8 h-8 text-cyan-500"></i> STUDIO BẢN VẼ
+        </h1>
+        <div class="px-4 py-2 bg-cyan-100 border-2 border-cyan-900 font-space font-bold text-sm shadow-[4px_4px_0px_#083344]">
+            HÂN x ANH HOÀNG
+        </div>
+    </div>
+
+    <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        
+        <!-- 🎛️ BẢNG ĐIỀU KHIỂN -->
+        <div class="lg:col-span-5 brutal-panel p-6 rounded-xl">
+            
+            <div class="space-y-6">
+                <!-- Nhãn Tin Tức (Tag) -->
+                <div>
+                    <label class="block font-space font-bold text-cyan-900 mb-2 uppercase tracking-wide text-sm flex items-center gap-2">
+                        <i data-lucide="tag" class="w-4 h-4"></i> 1. Nhãn Phân Loại
+                    </label>
+                    <input type="text" id="tagInput" value="TIN NỔI BẬT" class="brutal-input font-bold text-cyan-900" />
+                </div>
+
+                <!-- Tiêu đề chính (Headline) -->
+                <div>
+                    <label class="block font-space font-bold text-cyan-900 mb-2 uppercase tracking-wide text-sm flex items-center gap-2">
+                        <i data-lucide="type" class="w-4 h-4"></i> 2. Tiêu Đề Tin Tức
+                    </label>
+                    <textarea id="headlineInput" class="brutal-input font-bold" rows="4">Có sự khác biệt nào giữa
+chương trình học tiêu chuẩn
+quốc tế và chương trình 
+thông thường không?</textarea>
+                </div>
+
+                <!-- Tóm tắt (Subline) -->
+                <div>
+                    <label class="block font-space font-bold text-cyan-900 mb-2 uppercase tracking-wide text-sm flex items-center gap-2">
+                        <i data-lucide="align-left" class="w-4 h-4"></i> 3. Đoạn Tóm Tắt
+                    </label>
+                    <textarea id="sublineInput" class="brutal-input text-slate-700" rows="3">Tìm hiểu chi tiết về lộ trình đào tạo, phương pháp giảng dạy và những cơ hội phát triển toàn diện dành riêng cho sinh viên.</textarea>
+                </div>
+
+                <!-- Lời kêu gọi (CTA) -->
+                <div>
+                    <label class="block font-space font-bold text-cyan-900 mb-2 uppercase tracking-wide text-sm flex items-center gap-2">
+                        <i data-lucide="mouse-pointer-click" class="w-4 h-4"></i> 4. Lời Kêu Gọi
+                    </label>
+                    <input type="text" id="ctaInput" value="Kéo sang trái để xem chi tiết" class="brutal-input text-cyan-800 font-medium" />
+                </div>
+
+                <!-- Nút Xuất Ảnh -->
+                <button id="downloadBtn" class="w-full mt-4 py-4 brutal-btn rounded-xl font-space font-bold text-lg flex items-center justify-center gap-2 uppercase tracking-wide">
+                    <i data-lucide="download" class="w-6 h-6"></i>
+                    Bấm Để Xuất Bản
+                </button>
+            </div>
+        </div>
+
+        <!-- 🖼️ SÂN KHẤU HIỂN THỊ (Preview Card) -->
+        <div class="lg:col-span-7 flex justify-center overflow-x-auto pb-8">
+            
+            <!-- Khung thiết kế (Tỷ lệ 4:5 - 500x625) -->
+            <div id="design-node" class="relative w-[500px] h-[625px] flex-shrink-0 border-4 border-[#083344] bg-white overflow-hidden shadow-[12px_12px_0px_#bae6fd]">
+                
+                <!-- 1. NỀN LƯỚI CYAN ĐIỀN ĐẦY KHUNG HÌNH (Sử dụng đúng bức ảnh anh gửi làm nền) -->
+                <div class="absolute inset-0 z-0 cyan-grid-bg"></div>
+                <div class="absolute inset-0 z-0 grid-pattern opacity-80"></div>
+
+                <!-- 2. NỘI DUNG NỔI LÊN TRÊN (Các khối hộp trắng) -->
+                <div class="relative z-10 w-full h-full flex flex-col p-8 justify-start">
+                    
+                    <!-- Phần Header: Logo HPU & Tag -->
+                    <div class="flex justify-between items-start mb-4">
+                        <!-- Logo nguyên bản, sắc nét (Đã được Hân phóng to lên h-20) -->
+                        <img src="https://raw.githubusercontent.com/hpudn/hpudn.github.io/refs/heads/main/share_fb_home-removebg-preview.png" alt="Logo HPU" class="h-20 drop-shadow-md" crossorigin="anonymous" />
+                        
+                        <!-- Nhãn Tag góc phải -->
+                        <div class="bg-white border-2 border-[#083344] px-4 py-1.5 shadow-[4px_4px_0px_#06b6d4] transform rotate-2">
+                            <span id="previewTag" class="font-space font-bold text-[#083344] text-[13px] tracking-widest uppercase">TIN NỔI BẬT</span>
+                        </div>
+                    </div>
+
+                    <!-- Phần thân: Hộp nội dung chính (Headline & Subline) -->
+                    <div class="brutal-box p-8 mt-2 bg-white/95 backdrop-blur-sm">
+                        <!-- Dấu ngoặc kép trang trí -->
+                        <div class="absolute top-4 right-6 text-6xl font-space text-cyan-200 opacity-50 select-none">"</div>
+                        
+                        <h1 id="previewHeadline" class="relative z-10 font-space text-[30px] font-bold text-[#083344] leading-[1.3] tracking-tight whitespace-pre-line mb-5">Có sự khác biệt nào giữa
+chương trình học tiêu chuẩn
+quốc tế và chương trình 
+thông thường không?</h1>
+                        
+                        <p id="previewSubline" class="relative z-10 font-inter text-[#0e7490] text-[15px] leading-relaxed whitespace-pre-line font-medium border-l-4 border-cyan-400 pl-4">Tìm hiểu chi tiết về lộ trình đào tạo, phương pháp giảng dạy và những cơ hội phát triển toàn diện dành riêng cho sinh viên.</p>
+                    </div>
+
+                    <!-- Phần Footer: CTA -->
+                    <div class="mt-6 bg-[#083344] border-2 border-white text-white px-6 py-4 flex justify-between items-center shadow-[6px_6px_0px_rgba(255,255,255,0.8)]">
+                        <span id="previewCta" class="font-space font-bold text-[13px] tracking-widest uppercase text-cyan-300">Kéo sang trái để xem chi tiết</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5 text-cyan-300"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧵 JAVASCRIPT GẮN KẾT LOGIC -->
+    <script>
+        // Gọi icon hiện ra nè
+        lucide.createIcons();
+
+        // Mối lương duyên giữa ô nhập và bảng hiển thị
+        const mappings = {
+            'tagInput': 'previewTag',
+            'headlineInput': 'previewHeadline',
+            'sublineInput': 'previewSubline',
+            'ctaInput': 'previewCta'
+        };
+
+        // Lắng nghe từng phím gõ của anh Hoàng
+        Object.keys(mappings).forEach(inputId => {
+            const inputEl = document.getElementById(inputId);
+            const previewEl = document.getElementById(mappings[inputId]);
+            
+            inputEl.addEventListener('input', (e) => {
+                previewEl.innerText = e.target.value;
+            });
+        });
+
+        // Chức năng chụp màn hình siêu nét
+        const downloadBtn = document.getElementById('downloadBtn');
+        const designNode = document.getElementById('design-node');
+
+        downloadBtn.addEventListener('click', async () => {
+            try {
+                // Đổi chữ nút cho sinh động
+                const originalText = downloadBtn.innerHTML;
+                downloadBtn.innerHTML = '<span class="animate-pulse flex items-center gap-2"><i data-lucide="loader" class="w-6 h-6 animate-spin"></i> Đang in bản vẽ...</span>';
+                lucide.createIcons();
+
+                // Dùng html2canvas chụp lại vùng design-node
+                const canvas = await html2canvas(designNode, {
+                    scale: 3, // Phóng to gấp 3 lần để ảnh xuất ra nét căng từng pixel
+                    backgroundColor: '#ffffff',
+                    useCORS: true,
+                    logging: false
+                });
+                
+                // Trình kích hoạt tải file tự động
+                const link = document.createElement('a');
+                link.download = 'han-studio-ban-ve-cyan.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+
+                // Xong việc thì trả nút lại như cũ
+                downloadBtn.innerHTML = originalText;
+                lucide.createIcons(); 
+
+            } catch (error) {
+                console.error('Lỗi khi xuất ảnh:', error);
+                alert('Ôi, máy in bản vẽ bị kẹt giấy một chút! Anh Hoàng thử bấm lại nha!');
+                downloadBtn.innerHTML = originalText;
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
