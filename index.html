@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hpu designer</title>
+    <title>HPU DESIGN</title>
     
     <!-- 🎨 TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -85,10 +85,10 @@
     <!-- Header trang web -->
     <div class="w-full max-w-6xl mb-8 flex items-center justify-between">
         <h1 class="font-space text-3xl font-bold text-cyan-900 drop-shadow-sm flex items-center gap-3">
-            <i data-lucide="pen-tool" class="w-8 h-8 text-cyan-500"></i> STUDIO BẢN VẼ
+            <i data-lucide="pen-tool" class="w-8 h-8 text-cyan-500"></i> HPU STUDIO
         </h1>
         <div class="px-4 py-2 bg-cyan-100 border-2 border-cyan-900 font-space font-bold text-sm shadow-[4px_4px_0px_#083344]">
-            HPU DESIGNER
+            HPU DESIGN
         </div>
     </div>
 
@@ -117,20 +117,26 @@ quốc tế và chương trình
 thông thường không?</textarea>
                 </div>
 
+                <!-- Ảnh Minh Họa Ở Giữa -->
+                <div>
+                    <label class="block font-space font-bold text-cyan-900 mb-2 uppercase tracking-wide text-sm flex items-center gap-2">
+                        <i data-lucide="image" class="w-4 h-4"></i> 3. Ảnh Minh Họa (Tùy chọn)
+                    </label>
+                    <label class="flex items-center justify-center w-full h-14 border-2 border-dashed border-[#083344] bg-[#f8fafc] hover:bg-white cursor-pointer transition-all shadow-[4px_4px_0px_#06b6d4]">
+                        <div class="flex items-center gap-2 text-cyan-800">
+                            <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                            <span class="text-sm font-bold font-space">Click để tải ảnh lên</span>
+                        </div>
+                        <input type="file" id="middleImageUpload" class="hidden" accept="image/*" />
+                    </label>
+                </div>
+
                 <!-- Tóm tắt (Subline) -->
                 <div>
                     <label class="block font-space font-bold text-cyan-900 mb-2 uppercase tracking-wide text-sm flex items-center gap-2">
-                        <i data-lucide="align-left" class="w-4 h-4"></i> 3. Đoạn Tóm Tắt
+                        <i data-lucide="align-left" class="w-4 h-4"></i> 4. Đoạn Tóm Tắt
                     </label>
                     <textarea id="sublineInput" class="brutal-input text-slate-700" rows="3">Tìm hiểu chi tiết về lộ trình đào tạo, phương pháp giảng dạy và những cơ hội phát triển toàn diện dành riêng cho sinh viên.</textarea>
-                </div>
-
-                <!-- Lời kêu gọi (CTA) -->
-                <div>
-                    <label class="block font-space font-bold text-cyan-900 mb-2 uppercase tracking-wide text-sm flex items-center gap-2">
-                        <i data-lucide="mouse-pointer-click" class="w-4 h-4"></i> 4. Lời Kêu Gọi
-                    </label>
-                    <input type="text" id="ctaInput" value="Kéo sang trái để xem chi tiết" class="brutal-input text-cyan-800 font-medium" />
                 </div>
 
                 <!-- Nút Xuất Ảnh -->
@@ -147,41 +153,43 @@ thông thường không?</textarea>
             <!-- Khung thiết kế (Tỷ lệ 4:5 - 500x625) -->
             <div id="design-node" class="relative w-[500px] h-[625px] flex-shrink-0 border-4 border-[#083344] bg-white overflow-hidden shadow-[12px_12px_0px_#bae6fd]">
                 
-                <!-- 1. NỀN LƯỚI CYAN ĐIỀN ĐẦY KHUNG HÌNH (Sử dụng đúng bức ảnh anh gửi làm nền) -->
+                <!-- 1. NỀN LƯỚI CYAN ĐIỀN ĐẦY KHUNG HÌNH -->
                 <div class="absolute inset-0 z-0 cyan-grid-bg"></div>
                 <div class="absolute inset-0 z-0 grid-pattern opacity-80"></div>
 
                 <!-- 2. NỘI DUNG NỔI LÊN TRÊN (Các khối hộp trắng) -->
-                <div class="relative z-10 w-full h-full flex flex-col p-8 justify-start">
-                    
-                    <!-- Phần Header: Logo HPU & Tag -->
-                    <div class="flex justify-between items-start mb-4">
-                        <!-- Logo nguyên bản, sắc nét (Đã được Hân phóng to lên h-20) -->
-                        <img src="https://raw.githubusercontent.com/hpudn/hpudn.github.io/refs/heads/main/share_fb_home-removebg-preview.png" alt="Logo HPU" class="h-20 drop-shadow-md" crossorigin="anonymous" />
-                        
-                        <!-- Nhãn Tag góc phải -->
-                        <div class="bg-white border-2 border-[#083344] px-4 py-1.5 shadow-[4px_4px_0px_#06b6d4] transform rotate-2">
-                            <span id="previewTag" class="font-space font-bold text-[#083344] text-[13px] tracking-widest uppercase">TIN NỔI BẬT</span>
-                        </div>
-                    </div>
+                <div class="relative z-10 w-full h-full flex flex-col px-8 py-6 justify-start">
 
-                    <!-- Phần thân: Hộp nội dung chính (Headline & Subline) -->
-                    <div class="brutal-box p-8 mt-2 bg-white/95 backdrop-blur-sm">
-                        <!-- Dấu ngoặc kép trang trí -->
-                        <div class="absolute top-4 right-6 text-6xl font-space text-cyan-200 opacity-50 select-none">"</div>
+                    <!-- Hộp nội dung chính "ôm" trọn cả Logo và Tag -->
+                    <div class="brutal-box px-8 pt-6 pb-6 bg-white/95 backdrop-blur-sm flex flex-col relative">
                         
-                        <h1 id="previewHeadline" class="relative z-10 font-space text-[30px] font-bold text-[#083344] leading-[1.3] tracking-tight whitespace-pre-line mb-5">Có sự khác biệt nào giữa
+                        <!-- Dấu ngoặc kép trang trí lùi xuống một chút -->
+                        <div class="absolute top-[80px] right-6 text-5xl font-space text-cyan-200 opacity-40 select-none z-0">"</div>
+
+                        <!-- Phần Header: Logo HPU & Tag -->
+                        <div class="flex justify-between items-start mb-5 relative z-20">
+                            <!-- Logo HPU -->
+                            <img src="https://raw.githubusercontent.com/hpudn/hpudn.github.io/refs/heads/main/share_fb_home-removebg-preview.png" alt="Logo HPU" class="h-[60px] drop-shadow-md" crossorigin="anonymous" />
+                            
+                            <!-- Nhãn Tag góc phải -->
+                            <div class="bg-white border-2 border-[#083344] px-4 py-1.5 shadow-[4px_4px_0px_#06b6d4] transform rotate-2">
+                                <span id="previewTag" class="font-space font-bold text-[#083344] text-[13px] tracking-widest uppercase">TIN NỔI BẬT</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Tiêu đề (Headline) -->
+                        <h1 id="previewHeadline" class="relative z-10 font-space font-bold text-[#083344] tracking-tight whitespace-pre-line mb-4 transition-all duration-300">Có sự khác biệt nào giữa
 chương trình học tiêu chuẩn
 quốc tế và chương trình 
 thông thường không?</h1>
                         
-                        <p id="previewSubline" class="relative z-10 font-inter text-[#0e7490] text-[15px] leading-relaxed whitespace-pre-line font-medium border-l-4 border-cyan-400 pl-4">Tìm hiểu chi tiết về lộ trình đào tạo, phương pháp giảng dạy và những cơ hội phát triển toàn diện dành riêng cho sinh viên.</p>
-                    </div>
+                        <!-- Ảnh minh họa ở giữa -->
+                        <div id="previewMiddleImageContainer" class="hidden relative z-10 w-full mb-4 border-[3px] border-[#083344] shadow-[6px_6px_0px_#06b6d4] bg-white overflow-hidden flex items-center justify-center">
+                            <img id="previewMiddleImage" src="" alt="Ảnh minh họa" class="w-full h-auto max-h-[190px] object-contain" crossorigin="anonymous" />
+                        </div>
 
-                    <!-- Phần Footer: CTA -->
-                    <div class="mt-6 bg-[#083344] border-2 border-white text-white px-6 py-4 flex justify-between items-center shadow-[6px_6px_0px_rgba(255,255,255,0.8)]">
-                        <span id="previewCta" class="font-space font-bold text-[13px] tracking-widest uppercase text-cyan-300">Kéo sang trái để xem chi tiết</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-cyan-300"></i>
+                        <!-- Đoạn tóm tắt (Subline) -->
+                        <p id="previewSubline" class="relative z-10 font-inter text-[#0e7490] whitespace-pre-line font-medium border-l-4 border-cyan-400 pl-4 transition-all duration-300">Tìm hiểu chi tiết về lộ trình đào tạo, phương pháp giảng dạy và những cơ hội phát triển toàn diện dành riêng cho sinh viên.</p>
                     </div>
 
                 </div>
@@ -194,15 +202,12 @@ thông thường không?</h1>
         // Gọi icon hiện ra nè
         lucide.createIcons();
 
-        // Mối lương duyên giữa ô nhập và bảng hiển thị
+        // Mối lương duyên giữa ô nhập và bảng hiển thị cho các thành phần tĩnh
         const mappings = {
-            'tagInput': 'previewTag',
-            'headlineInput': 'previewHeadline',
-            'sublineInput': 'previewSubline',
-            'ctaInput': 'previewCta'
+            'tagInput': 'previewTag'
         };
 
-        // Lắng nghe từng phím gõ của anh Hoàng
+        // Lắng nghe phím gõ cho các trường cơ bản
         Object.keys(mappings).forEach(inputId => {
             const inputEl = document.getElementById(inputId);
             const previewEl = document.getElementById(mappings[inputId]);
@@ -210,6 +215,76 @@ thông thường không?</h1>
             inputEl.addEventListener('input', (e) => {
                 previewEl.innerText = e.target.value;
             });
+        });
+
+        // 🪄 PHÉP THUẬT AUTO-RESIZE CỦA HÂN CHO HEADLINE
+        const headlineInput = document.getElementById('headlineInput');
+        const previewHeadline = document.getElementById('previewHeadline');
+
+        headlineInput.addEventListener('input', (e) => {
+            const text = e.target.value;
+            const length = text.length;
+            
+            previewHeadline.innerText = text;
+
+            // Kiểm tra độ dài: thu nhỏ font chữ + bóp chặt line-height để không đẩy xuống dưới
+            if (length > 150) {
+                previewHeadline.style.fontSize = '18px';
+                previewHeadline.style.lineHeight = '1.2';
+            } else if (length > 90) {
+                previewHeadline.style.fontSize = '22px';
+                previewHeadline.style.lineHeight = '1.25';
+            } else if (length > 50) {
+                previewHeadline.style.fontSize = '26px';
+                previewHeadline.style.lineHeight = '1.3';
+            } else {
+                previewHeadline.style.fontSize = '30px';
+                previewHeadline.style.lineHeight = '1.3';
+            }
+        });
+        
+        // 🪄 PHÉP THUẬT AUTO-RESIZE CHO ĐOẠN TÓM TẮT (SUBLINE)
+        const sublineInput = document.getElementById('sublineInput');
+        const previewSubline = document.getElementById('previewSubline');
+
+        sublineInput.addEventListener('input', (e) => {
+            const text = e.target.value;
+            const length = text.length;
+            
+            previewSubline.innerText = text;
+
+            // Cơ chế tự động nhỏ lại dành cho đoạn tóm tắt
+            if (length > 250) {
+                previewSubline.style.fontSize = '12px';
+                previewSubline.style.lineHeight = '1.4';
+            } else if (length > 150) {
+                previewSubline.style.fontSize = '13.5px';
+                previewSubline.style.lineHeight = '1.5';
+            } else {
+                previewSubline.style.fontSize = '15px';
+                previewSubline.style.lineHeight = '1.625';
+            }
+        });
+
+        // Gọi lệnh một lần lúc mới mở web để set size chuẩn ban đầu
+        headlineInput.dispatchEvent(new Event('input'));
+        sublineInput.dispatchEvent(new Event('input'));
+
+        // 📸 Chức năng hiển thị ảnh minh họa ở giữa
+        const middleImageUpload = document.getElementById('middleImageUpload');
+        const previewMiddleImage = document.getElementById('previewMiddleImage');
+        const previewMiddleImageContainer = document.getElementById('previewMiddleImageContainer');
+
+        middleImageUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    previewMiddleImage.src = event.target.result;
+                    previewMiddleImageContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
         });
 
         // Chức năng chụp màn hình siêu nét
