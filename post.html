@@ -6,7 +6,7 @@
     <title>HPU POST</title>
     
     <!-- 🎨 TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>OST
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- 🪄 Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- 📸 html-to-image -->
@@ -159,7 +159,6 @@
                             <!-- Avatar: Dùng chính logo HPU, bo tròn, có viền phát sáng -->
                             <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-600 to-fuchsia-500 p-[2px] shadow-[0_0_15px_rgba(124,58,237,0.5)]">
                                 <div class="w-full h-full bg-[#06020c] rounded-full flex items-center justify-center overflow-hidden">
-                                    <!-- FIX: Gán ảnh Base64 trong suốt mặc định, JS sẽ tải và đè logo thật lên để tránh lỗi CORS -->
                                     <img id="logoImg" data-src="https://raw.githubusercontent.com/hpudn/hpudn.github.io/refs/heads/main/share_fb_home-removebg-preview.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Logo" class="w-5 h-5 object-contain opacity-90" style="filter: brightness(0) invert(1);" />
                                 </div>
                             </div>
@@ -181,8 +180,8 @@
                         
                         <!-- Ảnh đính kèm -->
                         <div id="previewMiddleImageContainer" class="hidden w-full mt-6 rounded-xl overflow-hidden border border-white/10 shadow-lg">
-                            <!-- FIX: Gán ảnh Base64 trong suốt mặc định thay vì chuỗi rỗng để không bị lỗi isTrusted: true -->
-                            <img id="previewMiddleImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Ảnh minh họa" class="w-full h-auto max-h-[180px] object-cover" />
+                            <!-- Đã tăng max-h lên 300px để ảnh tải lên hiển thị dài và đẹp hơn -->
+                            <img id="previewMiddleImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Ảnh minh họa" class="w-full h-auto max-h-[300px] object-cover" />
                         </div>
 
                         <!-- Chú thích phụ -->
@@ -209,7 +208,7 @@
         // Gọi icon
         lucide.createIcons();
 
-        // FIX LỖI CORS HÌNH ẢNH (Biến logo tải từ url thành base64)
+        // FIX LỖI CORS HÌNH ẢNH
         const logoImg = document.getElementById('logoImg');
         fetch(logoImg.getAttribute('data-src'))
             .then(res => res.blob())
