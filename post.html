@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPU POST</title>
+    
+    <!-- 🎨 TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>OST
+    <!-- 🪄 Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 📸 html-to-image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+    
+    <style>
+        /* Import Google Fonts trực tiếp trong style để tránh lỗi CSSStyleSheet SecurityError của thư viện */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        body { 
+            background-color: #05020a; /* Nền ngoài màu đen ánh tím siêu tối */
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Nền nhiễu hạt (Film Grain) mờ ảo cho không gian */
+        .bg-noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+        }
+
+        /* Thẻ Kính Trong Suốt (Glassmorphism Card) */
+        .neon-glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15); /* Viền sáng mặt trên */
+        }
+
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0514; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9333ea; }
+        
+        .whitespace-pre-line { white-space: pre-line; }
+
+        /* Bảng Điều Khiển Tone Cyber */
+        .brutal-panel { background-color: #0a0514; border: 1px solid #2e1065; box-shadow: 0 20px 40px rgba(0,0,0,0.9); }
+        .brutal-input {
+            width: 100%; padding: 0.85rem; background-color: #120524; border: 1px solid #4c1d95; color: white;
+            outline: none; transition: all 0.2s; border-radius: 0.75rem; font-weight: 400;
+        }
+        .brutal-input:focus { border-color: #a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
+        
+        .space-btn {
+            background: linear-gradient(135deg, #7c3aed, #4c1d95); color: white; border: 1px solid #a855f7;
+            transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .space-btn:hover { background: linear-gradient(135deg, #9333ea, #5b21b6); box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex flex-col items-center justify-start relative overflow-x-hidden">
+
+    <!-- 🔮 Ánh sáng nền ngoài website -->
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 flex items-center justify-center opacity-30">
+        <div class="w-[800px] h-[800px] rounded-full bg-violet-700 blur-[180px] mix-blend-screen absolute bottom-[-30%] left-[-10%]"></div>
+        <div class="w-[600px] h-[600px] rounded-full bg-fuchsia-600 blur-[150px] mix-blend-screen absolute top-[-20%] right-[-10%] opacity-40"></div>
+    </div>
+
+    <!-- Header trang web -->
+    <div class="w-full max-w-6xl mb-8 flex items-center justify-between relative z-10">
+        <h1 class="text-3xl font-bold text-violet-200 flex items-center gap-3 tracking-widest uppercase">
+            <i data-lucide="sparkles" class="w-8 h-8 text-violet-500"></i> STUDIO NEON
+        </h1>
+        <div class="px-4 py-2 border border-violet-900/50 text-violet-300 font-bold text-xs tracking-widest bg-violet-950/30 backdrop-blur-md rounded-full">
+            BẢN VẼ SÁNG TẠO
+        </div>
+    </div>
+
+    <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
+        
+        <!-- 🎛️ BẢNG ĐIỀU KHIỂN -->
+        <div class="lg:col-span-5 brutal-panel p-7 rounded-3xl">
+            <div class="space-y-5">
+                
+                <!-- Tên Tài Khoản -->
+                <div>
+                    <label class="block font-bold text-violet-300/70 mb-2 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                        <i data-lucide="user-circle" class="w-3 h-3"></i> 1. Tên Tài Khoản (Username)
+                    </label>
+                    <input type="text" id="usernameInput" value="studio_sangtao" class="brutal-input text-sm" />
+                </div>
+
+                <!-- Câu Trích Dẫn (Quote / Headline) -->
+                <div>
+                    <label class="block font-bold text-violet-300/70 mb-2 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                        <i data-lucide="quote" class="w-3 h-3"></i> 2. Câu Trích Dẫn (Sẽ tự động bôi đậm chữ cuối)
+                    </label>
+                    <textarea id="headlineInput" class="brutal-input text-lg font-medium leading-relaxed" rows="4">Bạn đã bao giờ nghĩ có bao nhiêu doanh nghiệp bắt đầu sai hướng vì bỏ qua các bước trong xây dựng thương hiệu chưa?</textarea>
+                </div>
+
+                <!-- Ảnh Đính Kèm (Tùy chọn) -->
+                <div>
+                    <label class="block font-bold text-violet-300/70 mb-2 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                        <i data-lucide="image" class="w-3 h-3"></i> 3. Ảnh Đính Kèm (Không bắt buộc)
+                    </label>
+                    <label class="flex items-center justify-center w-full h-14 border-2 border-dashed border-violet-500/40 hover:border-violet-400 hover:bg-violet-900/20 cursor-pointer transition-all rounded-xl">
+                        <div class="flex items-center gap-2 text-violet-400">
+                            <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                            <span class="text-xs tracking-widest font-bold">TẢI ẢNH LÊN</span>
+                        </div>
+                        <input type="file" id="middleImageUpload" class="hidden" accept="image/*" />
+                    </label>
+                </div>
+
+                <!-- Chú thích thêm (Subline) -->
+                <div>
+                    <label class="block font-bold text-violet-300/70 mb-2 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                        <i data-lucide="align-left" class="w-3 h-3"></i> 4. Chú thích nhỏ (Bên dưới ảnh/chữ)
+                    </label>
+                    <textarea id="sublineInput" class="brutal-input text-gray-300 text-xs leading-relaxed" rows="2">Chia sẻ quan điểm của bạn dưới phần bình luận nhé!</textarea>
+                </div>
+
+                <!-- Nút Xuất Ảnh -->
+                <button id="downloadBtn" class="w-full mt-4 py-4 space-btn rounded-xl font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="scan" class="w-5 h-5"></i>
+                    Bắt Trọn Không Gian Neon
+                </button>
+            </div>
+        </div>
+
+        <!-- 🖼️ SÂN KHẤU HIỂN THỊ (Preview Card - Neon Glassmorphism) -->
+        <div class="lg:col-span-7 flex justify-center overflow-x-auto pb-8">
+            
+            <!-- Khung thiết kế (Tỷ lệ 4:5 - 500x625) -->
+            <div id="design-node" class="relative w-[500px] h-[625px] flex-shrink-0 bg-[#06020c] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.9)] rounded-md border border-white/5">
+                
+                <!-- 1. NỀN BÓNG ĐÊM & LÀN SÓNG NEON (Neon Waves) -->
+                <div class="absolute bottom-[-150px] left-[-100px] w-[500px] h-[350px] z-0" style="background: radial-gradient(circle, rgba(124,58,237,0.6) 0%, rgba(124,58,237,0) 70%);"></div>
+                <div class="absolute bottom-[-100px] right-[-50px] w-[400px] h-[250px] z-0" style="background: radial-gradient(circle, rgba(217,70,239,0.4) 0%, rgba(217,70,239,0) 70%);"></div>
+                <!-- Sáng nhẹ góc trên -->
+                <div class="absolute top-[-100px] left-[-50px] w-[300px] h-[300px] z-0" style="background: radial-gradient(circle, rgba(88,28,135,0.4) 0%, rgba(88,28,135,0) 70%);"></div>
+
+                <!-- 2. NỀN NHIỄU HẠT (Noise) -->
+                <div class="absolute inset-0 z-10 bg-noise pointer-events-none opacity-50"></div>
+
+                <!-- Các biểu tượng dấu + trang trí nền -->
+                <div class="absolute top-[20%] right-[10%] text-white/10 font-bold text-4xl z-0">+</div>
+                <div class="absolute bottom-[40%] right-[5%] text-white/10 font-bold text-6xl z-0">+</div>
+                <div class="absolute bottom-[20%] left-[5%] text-white/10 font-bold text-5xl z-0">+</div>
+
+                <!-- 3. THẺ KÍNH TRUNG TÂM (The Glass Card) -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[85%] z-20 neon-glass-card rounded-[24px] p-8 flex flex-col">
+                    
+                    <!-- Header của thẻ: Avatar & Username -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-3">
+                            <!-- Avatar: Dùng chính logo HPU, bo tròn, có viền phát sáng -->
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-600 to-fuchsia-500 p-[2px] shadow-[0_0_15px_rgba(124,58,237,0.5)]">
+                                <div class="w-full h-full bg-[#06020c] rounded-full flex items-center justify-center overflow-hidden">
+                                    <!-- FIX: Gán ảnh Base64 trong suốt mặc định, JS sẽ tải và đè logo thật lên để tránh lỗi CORS -->
+                                    <img id="logoImg" data-src="https://raw.githubusercontent.com/hpudn/hpudn.github.io/refs/heads/main/share_fb_home-removebg-preview.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Logo" class="w-5 h-5 object-contain opacity-90" style="filter: brightness(0) invert(1);" />
+                                </div>
+                            </div>
+                            <span id="previewUsername" class="text-white text-sm font-semibold tracking-wide">studio_sangtao</span>
+                        </div>
+                        <!-- Nút 3 chấm -->
+                        <div class="flex gap-1">
+                            <div class="w-1 h-1 bg-white/50 rounded-full"></div>
+                            <div class="w-1 h-1 bg-white/50 rounded-full"></div>
+                            <div class="w-1 h-1 bg-white/50 rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Nội dung chính: Câu Quote -->
+                    <div class="flex-grow flex flex-col justify-center mb-6">
+                        <h1 id="previewHeadline" class="text-white text-[26px] font-light leading-[1.4] tracking-tight transition-all duration-300">
+                            Bạn đã bao giờ nghĩ có bao nhiêu doanh nghiệp bắt đầu sai hướng vì bỏ qua các bước trong xây dựng <span class="font-bold">thương hiệu chưa?</span>
+                        </h1>
+                        
+                        <!-- Ảnh đính kèm -->
+                        <div id="previewMiddleImageContainer" class="hidden w-full mt-6 rounded-xl overflow-hidden border border-white/10 shadow-lg">
+                            <!-- FIX: Gán ảnh Base64 trong suốt mặc định thay vì chuỗi rỗng để không bị lỗi isTrusted: true -->
+                            <img id="previewMiddleImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Ảnh minh họa" class="w-full h-auto max-h-[180px] object-cover" />
+                        </div>
+
+                        <!-- Chú thích phụ -->
+                        <p id="previewSubline" class="text-white/50 text-[12px] mt-4 font-light transition-all duration-300 hidden"></p>
+                    </div>
+
+                    <!-- Footer của thẻ: Thanh Icon Social (Tim, Comment, Share, Save) -->
+                    <div class="flex items-center justify-between pt-2 border-white/5">
+                        <div class="flex items-center gap-4 text-white/80">
+                            <svg class="w-6 h-6 hover:text-red-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            <svg class="w-6 h-6 hover:text-violet-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <svg class="w-6 h-6 hover:text-violet-400 transition-colors transform -rotate-12 mt-[-2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </div>
+                        <svg class="w-6 h-6 text-white/80 hover:text-violet-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧵 JAVASCRIPT GẮN KẾT LOGIC -->
+    <script>
+        // Gọi icon
+        lucide.createIcons();
+
+        // FIX LỖI CORS HÌNH ẢNH (Biến logo tải từ url thành base64)
+        const logoImg = document.getElementById('logoImg');
+        fetch(logoImg.getAttribute('data-src'))
+            .then(res => res.blob())
+            .then(blob => {
+                const reader = new FileReader();
+                reader.onloadend = () => logoImg.src = reader.result;
+                reader.readAsDataURL(blob);
+            })
+            .catch(err => console.warn("Không thể tải logo an toàn, thử dùng ảnh mặc định", err));
+
+        // 1. Đồng bộ Username
+        const usernameInput = document.getElementById('usernameInput');
+        const previewUsername = document.getElementById('previewUsername');
+        usernameInput.addEventListener('input', (e) => {
+            previewUsername.innerText = e.target.value;
+        });
+
+        // 2. Tự động resize & bôi đậm chữ cuối
+        const headlineInput = document.getElementById('headlineInput');
+        const previewHeadline = document.getElementById('previewHeadline');
+
+        function updateHeadline(text) {
+            const length = text.length;
+            
+            const words = text.split(' ');
+            let formattedHtml = text;
+            if (words.length > 1) {
+                // Tách từ cuối cùng ra
+                const lastWord = words.pop();
+                // Nối lại và thêm thẻ <span> bôi đậm cho từ cuối
+                formattedHtml = `${words.join(' ')} <span class="font-bold">${lastWord}</span>`;
+            }
+            
+            previewHeadline.innerHTML = formattedHtml;
+
+            if (length > 120) {
+                previewHeadline.style.fontSize = '18px';
+                previewHeadline.style.lineHeight = '1.4';
+            } else if (length > 80) {
+                previewHeadline.style.fontSize = '22px';
+                previewHeadline.style.lineHeight = '1.35';
+            } else {
+                previewHeadline.style.fontSize = '26px'; 
+                previewHeadline.style.lineHeight = '1.3';
+            }
+        }
+
+        headlineInput.addEventListener('input', (e) => {
+            updateHeadline(e.target.value);
+        });
+
+        // 3. Xử lý Chú thích (Subline)
+        const sublineInput = document.getElementById('sublineInput');
+        const previewSubline = document.getElementById('previewSubline');
+
+        sublineInput.addEventListener('input', (e) => {
+            const text = e.target.value.trim();
+            if(text === "") {
+                previewSubline.classList.add('hidden');
+            } else {
+                previewSubline.classList.remove('hidden');
+                previewSubline.innerText = text;
+            }
+        });
+
+        // Khởi tạo trạng thái ban đầu
+        updateHeadline(headlineInput.value);
+        sublineInput.dispatchEvent(new Event('input'));
+
+        // 4. Chức năng hiển thị ảnh bên trong thẻ
+        const middleImageUpload = document.getElementById('middleImageUpload');
+        const previewMiddleImage = document.getElementById('previewMiddleImage');
+        const previewMiddleImageContainer = document.getElementById('previewMiddleImageContainer');
+
+        middleImageUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    previewMiddleImage.src = event.target.result;
+                    previewMiddleImageContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 5. Chức năng chụp màn hình
+        const downloadBtn = document.getElementById('downloadBtn');
+        const designNode = document.getElementById('design-node');
+
+        downloadBtn.addEventListener('click', () => {
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<span class="animate-pulse flex items-center gap-2"><i data-lucide="loader" class="w-5 h-5 animate-spin"></i> Đang kết xuất hình ảnh...</span>';
+            lucide.createIcons();
+
+            htmlToImage.toPng(designNode, { 
+                pixelRatio: 3, 
+                backgroundColor: '#06020c'
+            })
+            .then(function (dataUrl) {
+                const link = document.createElement('a');
+                link.download = 'studio-neon-post.png';
+                link.href = dataUrl;
+                link.click();
+                
+                downloadBtn.innerHTML = originalText;
+                lucide.createIcons(); 
+            })
+            .catch(function (error) {
+                console.error('Lỗi khi xuất ảnh:', error);
+                alert('Đã xảy ra lỗi trong quá trình xử lý hình ảnh! Vui lòng thử lại.');
+                downloadBtn.innerHTML = originalText;
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+</html>
