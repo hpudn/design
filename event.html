@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Vẽ Doanh Nghiệp | Studio Sáng Tạo</title>
+    
+    <!-- 🎨 TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 🪄 Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 📸 html-to-image (Thư viện xuất ảnh an toàn) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+
+    <!-- Font: Montserrat cho sự hiện đại, đậm đà của tiêu đề lớn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            background-color: #f1f5f9; /* Nền xám nhạt (slate-100) cho giao diện ngoài */
+            color: #1e293b;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+        /* --- CÁC HIỆU ỨNG CHO POSTER --- */
+        
+        /* Hiệu ứng màu chữ Gradient cho tiêu đề lớn (VD: 2026) */
+        .text-gradient-blue {
+            background: linear-gradient(to bottom, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Các khối cầu/bong bóng xanh dương mờ ảo (Soft Blue Orbs) */
+        .orb-1 {
+            background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.1) 60%, transparent 80%);
+            filter: blur(40px);
+        }
+        .orb-2 {
+            background: radial-gradient(circle at 70% 70%, rgba(96, 165, 250, 0.6), rgba(59, 130, 246, 0.2) 60%, transparent 80%);
+            filter: blur(50px);
+        }
+        .orb-3 {
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.5), rgba(29, 78, 216, 0.1) 50%, transparent 70%);
+            filter: blur(60px);
+        }
+        .orb-4 {
+             background: radial-gradient(circle at 20% 80%, rgba(147, 197, 253, 0.5), rgba(59, 130, 246, 0.15) 60%, transparent 80%);
+             filter: blur(45px);
+        }
+
+        /* Những đường cong tinh tế mờ nhạt làm nền */
+        .subtle-curve {
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+        }
+
+
+        /* --- UI PANEL STYLING --- */
+        .control-panel { 
+            background-color: #ffffff; 
+            border: 1px solid #e2e8f0; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        }
+        .control-input {
+            width: 100%; padding: 0.75rem; background-color: #f8fafc; border: 1px solid #cbd5e1; color: #334155;
+            outline: none; transition: all 0.2s; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500;
+        }
+        .control-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); background-color: #ffffff; }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1e40af); color: white;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+        }
+        .btn-primary:hover { 
+            background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); 
+            transform: translateY(-2px); 
+        }
+
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex flex-col items-center justify-start relative overflow-x-hidden">
+
+    <div class="w-full max-w-6xl mb-8 flex items-center justify-between relative z-10">
+        <h1 class="text-3xl font-black text-slate-800 flex items-center gap-3 tracking-tight">
+            <i data-lucide="briefcase" class="w-8 h-8 text-blue-600"></i> Corporate Studio
+        </h1>
+        <div class="px-4 py-1.5 border border-blue-200 text-blue-700 font-bold text-xs tracking-widest bg-blue-50 rounded-full shadow-sm">
+            PHONG CÁCH TỐI GIẢN
+        </div>
+    </div>
+
+    <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+        
+        <!-- 🎛️ BẢNG ĐIỀU KHIỂN -->
+        <div class="lg:col-span-5 control-panel p-7 rounded-2xl">
+            <div class="space-y-6">
+                
+                <!-- Logo / Thương hiệu -->
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-widest">1. Tên Thương Hiệu (Logo top)</label>
+                    <input type="text" id="logoTextInp" value="DesignerJOSH" class="control-input font-semibold" />
+                </div>
+
+                <!-- Lời chào mừng -->
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-widest">2. Tiêu đề phụ (Lời chào)</label>
+                    <input type="text" id="welcomeTextInp" value="Welcome To" class="control-input" />
+                </div>
+
+                <!-- Chữ Khổng Lồ (2026) -->
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-widest">3. Ký tự khổng lồ (Nổi bật nhất)</label>
+                    <textarea id="giantTextInp" class="control-input font-montserrat font-black text-2xl text-center leading-tight" rows="2">20
+26</textarea>
+                </div>
+
+                <!-- Call to Action (CTA) & Thông điệp -->
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 pb-2">4. Thông điệp & Kêu gọi</label>
+                    <div>
+                        <label class="block text-[10px] text-slate-400 mb-1 font-semibold">Thông điệp nhỏ</label>
+                        <input type="text" id="messageInp" value="Let's make more magic together." class="control-input text-xs" />
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-slate-400 mb-1 font-semibold">Lời kêu gọi (In đậm)</label>
+                        <input type="text" id="ctaInp" value="SEND A DM TODAY!" class="control-input text-xs font-bold uppercase" />
+                    </div>
+                </div>
+
+                <!-- Mạng xã hội / Footer -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-widest">5. Info Trái</label>
+                        <input type="text" id="socialLeftInp" value="IG: designerjosh_" class="control-input text-xs" />
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-widest">Info Phải</label>
+                        <input type="text" id="socialRightInp" value="X: jabayomi84" class="control-input text-xs" />
+                    </div>
+                </div>
+
+                <!-- Nút Xuất Ảnh -->
+                <button id="downloadBtn" class="w-full mt-6 py-4 btn-primary rounded-xl font-bold text-lg flex items-center justify-center gap-2">
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                    XUẤT POSTER DOANH NGHIỆP
+                </button>
+            </div>
+        </div>
+
+        <!-- 🖼️ SÂN KHẤU HIỂN THỊ -->
+        <div class="lg:col-span-7 flex justify-center overflow-x-auto pb-8">
+            
+            <!-- Khung thiết kế (Tỷ lệ dọc 4:5 - 540x675) -->
+            <div id="design-node" class="relative w-[540px] h-[675px] flex-shrink-0 bg-white overflow-hidden shadow-2xl rounded-sm border border-slate-200">
+                
+                <!-- --- 1. LỚP NỀN (BACKGROUND & ABSTRACT SHAPES) --- -->
+                
+                <!-- Các vòng tròn mờ (Orbs) tạo chiều sâu -->
+                <div class="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] orb-1 z-0"></div>
+                <div class="absolute top-[20%] right-[-150px] w-[350px] h-[350px] orb-2 z-0"></div>
+                <div class="absolute bottom-[-50px] right-[10%] w-[400px] h-[400px] orb-3 z-0 opacity-70"></div>
+                <div class="absolute bottom-[20%] left-[-150px] w-[300px] h-[300px] orb-4 z-0"></div>
+
+                <!-- Các đường cong mảnh (Subtle Curves) -->
+                <div class="absolute top-[-200px] right-[-100px] w-[600px] h-[600px] subtle-curve z-0"></div>
+                <div class="absolute bottom-[-300px] left-[-200px] w-[800px] h-[800px] subtle-curve z-0"></div>
+                <div class="absolute top-[30%] right-[5%] w-[200px] h-[200px] subtle-curve z-0 opacity-50"></div>
+
+
+                <!-- --- 2. NỘI DUNG CHÍNH (CONTENT) --- -->
+                <div class="absolute inset-0 z-10 flex flex-col items-center justify-between py-10 px-8">
+                    
+                    <!-- Phần Top: Logo Thương Hiệu -->
+                    <div id="previewLogoText" class="font-montserrat font-bold text-[#1e3a8a] tracking-tight text-lg mt-2">
+                        Designer<span class="font-black text-[#1e40af]">JOSH</span>
+                    </div>
+
+                    <!-- Phần Giữa: Cụm Tiêu Đề Khổng Lồ -->
+                    <div class="flex flex-col items-center justify-center flex-grow w-full">
+                        
+                        <!-- Lời chào mừng (Phía trên chữ lớn) -->
+                        <h2 id="previewWelcomeText" class="font-montserrat font-semibold text-[#1e3a8a] text-[22px] mb-2 tracking-wide">
+                            Welcome To
+                        </h2>
+
+                        <!-- KÝ TỰ KHỔNG LỒ (Giant Typography) -->
+                        <!-- Sử dụng text-gradient, drop-shadow nhẹ và whitespace-pre-line để giữ format xuống dòng -->
+                        <h1 id="previewGiantText" class="font-montserrat font-black text-[180px] leading-[0.85] text-center whitespace-pre-line text-gradient-blue tracking-tighter drop-shadow-[0_10px_20px_rgba(59,130,246,0.15)] relative z-20">
+                            20
+                            26
+                        </h1>
+
+                    </div>
+
+                    <!-- Phần Bottom: Thông điệp, CTA và Mạng xã hội -->
+                    <div class="w-full flex flex-col items-center">
+                        
+                        <!-- Cụm thông điệp & Kêu gọi -->
+                        <div class="flex flex-col items-center text-[#1e3a8a] mb-12">
+                            <p id="previewMessage" class="font-medium text-[15px] tracking-wide opacity-90 mb-1">
+                                Let's make more magic together.
+                            </p>
+                            <p id="previewCta" class="font-bold text-[16px] tracking-widest uppercase">
+                                SEND A DM TODAY!
+                            </p>
+                        </div>
+
+                        <!-- Footer: Mạng xã hội (Căn trái phải) -->
+                        <div class="w-full px-8 flex justify-between items-center text-[#1e3a8a] font-medium text-[14px]">
+                            <span id="previewSocialLeft">IG: designerjosh_</span>
+                            <span id="previewSocialRight">X: jabayomi84</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧵 LOGIC ĐIỀU KHIỂN -->
+    <script>
+        lucide.createIcons();
+
+        // 1. Hàm hỗ trợ format Logo Text (Phân biệt chữ thường / in hoa để bôi đậm)
+        function formatLogoText(text, elementId) {
+            const el = document.getElementById(elementId);
+            // Kỹ thuật nhỏ: Giả sử người dùng muốn nhấn mạnh phần chữ IN HOA trong Tên thương hiệu.
+            // Nếu không có quy luật rõ ràng, ta cứ hiển thị bình thường.
+            // Ở đây, ta làm đơn giản: chia đôi chuỗi (giả lập giống "DesignerJOSH").
+            // Nếu người dùng nhập bình thường thì không ảnh hưởng nhiều.
+            el.innerText = text; 
+        }
+
+        // 2. Đồng bộ các Input Text
+        const mappings = {
+            'logoTextInp': 'previewLogoText',
+            'welcomeTextInp': 'previewWelcomeText',
+            'giantTextInp': 'previewGiantText',
+            'messageInp': 'previewMessage',
+            'ctaInp': 'previewCta',
+            'socialLeftInp': 'previewSocialLeft',
+            'socialRightInp': 'previewSocialRight'
+        };
+
+        Object.keys(mappings).forEach(inputId => {
+            const inputEl = document.getElementById(inputId);
+            const previewEl = document.getElementById(mappings[inputId]);
+            
+            inputEl.addEventListener('input', (e) => {
+                if(inputId === 'logoTextInp') {
+                    // Logic xử lý highlight cho logo (tạm thời để hiển thị text thuần túy cho an toàn)
+                    previewEl.innerText = e.target.value;
+                } else if(inputId === 'giantTextInp') {
+                     previewEl.innerText = e.target.value;
+                     // Tự động điều chỉnh kích thước nếu gõ quá dài
+                     const text = e.target.value;
+                     const lines = text.split('\n');
+                     const maxLength = Math.max(...lines.map(line => line.length));
+                     
+                     if (maxLength > 6) {
+                         previewEl.style.fontSize = '80px';
+                     } else if (maxLength > 4) {
+                         previewEl.style.fontSize = '120px';
+                     } else {
+                         previewEl.style.fontSize = '180px';
+                     }
+                } else {
+                    previewEl.innerText = e.target.value;
+                }
+            });
+        });
+
+        // Khởi tạo trạng thái ban đầu cho chữ khổng lồ
+        document.getElementById('giantTextInp').dispatchEvent(new Event('input'));
+
+        // 3. Chức năng xuất ảnh an toàn (html-to-image)
+        const downloadBtn = document.getElementById('downloadBtn');
+        const designNode = document.getElementById('design-node');
+
+        downloadBtn.addEventListener('click', () => {
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<span class="animate-pulse flex items-center gap-2"><i data-lucide="loader" class="w-5 h-5 animate-spin"></i> Đang xuất bản kiệt tác...</span>';
+            lucide.createIcons();
+
+            htmlToImage.toPng(designNode, { 
+                pixelRatio: 2, // Đảm bảo độ nét xuất sắc cho các text kích thước lớn
+                backgroundColor: '#ffffff'
+            })
+            .then(function (dataUrl) {
+                const link = document.createElement('a');
+                link.download = 'corporate-minimalist-poster.png';
+                link.href = dataUrl;
+                link.click();
+                
+                downloadBtn.innerHTML = originalText;
+                lucide.createIcons(); 
+            })
+            .catch(function (error) {
+                console.error('Lỗi khi xuất ảnh:', error);
+                alert('Đã xảy ra lỗi trong quá trình xử lý hình ảnh! Vui lòng thử lại.');
+                downloadBtn.innerHTML = originalText;
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+</html>
